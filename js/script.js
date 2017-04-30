@@ -68,7 +68,7 @@ $(document).ready(function() {
                     if (response.success) {
                         var cookie = "x-access-token=" + response.token;
                         document.cookie = cookie;
-                        window.location.href = "2017-04-30-font-end/index.html/index.html";
+                        window.location.href = "/2017-04-30-font-end/index.html";
                     } else {
                         alert(response.message);
                     }
