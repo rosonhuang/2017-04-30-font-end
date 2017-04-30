@@ -1,15 +1,39 @@
+
+var token;
+
+
+function deletCookie(name) {
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+}
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function updateNavigationView() {
+    if (token) {
+        $("#loginNav").hide();
+        $("#logoutNav").show();
+    } else {
+        $("#loginNav").show();
+        $("#logoutNav").hide();
+    }
+}
+
 $(document).ready(function() {
 
-    $("#signupBtn").click(function(event) {
-        console.log(event);
-        // alert("sign up btn clicked")
-        event.preventDefault();
+    token = getCookie("x-access-token");
 
+    updateNavigationView();
+
+    $("#signupBtn").click(function(event) {
+        event.preventDefault();
         var username = $("#username").val();
         var password = $("#password").val();
-        // console.log(username + " " + password);
-
-        if (username && password) {
+              if (username && password) {
+                
             $.post("http://open-commerce.herokuapp.com/api/signup", {
                     username: username,
                     password: password
@@ -56,4 +80,14 @@ $(document).ready(function() {
 
         }
     });
+
+    $("#logoutNav").click(function(event) {
+            event.preventDefault()
+            deletCookie('x-access-token');
+            window.location.href = "index.html"
+
+        }
+
+    )
+
 });
